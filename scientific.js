@@ -10,16 +10,16 @@ function evaluateScientific(source) {
   while(index<normalized.length){
     pattern.lastIndex=index;
     const match=pattern.exec(normalized);
-    if(!match)throw Error('Invalid character');
+    if(!match)throw Error(window.siteText('Invalid character'));
     tokens.push(match[1]!==undefined ? {type:'number',value:Number(match[0].trim())} : {type:match[3].toLowerCase()});
     index=pattern.lastIndex;
   }
   let pos=0;
   const peek=()=>tokens[pos]?.type;
-  const take=type=>{if(peek()!==type)throw Error('Check the expression');pos++};
-  function factorial(value){if(!Number.isInteger(value)||value<0||value>170)throw Error('Factorial needs an integer from 0 to 170');let out=1;for(let i=2;i<=value;i++)out*=i;return out}
+  const take=type=>{if(peek()!==type)throw Error(window.siteText('Check the expression'));pos++};
+  function factorial(value){if(!Number.isInteger(value)||value<0||value>170)throw Error(window.siteText('Factorial needs an integer from 0 to 170'));let out=1;for(let i=2;i<=value;i++)out*=i;return out}
   function prefix(){
-    const next=tokens[pos++];if(!next)throw Error('Incomplete expression');
+    const next=tokens[pos++];if(!next)throw Error(window.siteText('Incomplete expression'));
     if(next.type==='number')return next.value;
     if(next.type==='-')return -parse(25);
     if(next.type==='+')return parse(25);
@@ -29,7 +29,7 @@ function evaluateScientific(source) {
     if(next.type==='ans')return previousAnswer;
     const functions={sin:n=>Math.sin(degrees?n*Math.PI/180:n),cos:n=>Math.cos(degrees?n*Math.PI/180:n),tan:n=>Math.tan(degrees?n*Math.PI/180:n),asin:n=>degrees?Math.asin(n)*180/Math.PI:Math.asin(n),acos:n=>degrees?Math.acos(n)*180/Math.PI:Math.acos(n),atan:n=>degrees?Math.atan(n)*180/Math.PI:Math.atan(n),sqrt:Math.sqrt,ln:Math.log,log:Math.log10,abs:Math.abs};
     if(functions[next.type]){take('(');const n=parse(0);take(')');return functions[next.type](n)}
-    throw Error('Check the expression');
+    throw Error(window.siteText('Check the expression'));
   }
   function parse(minPower){
     let left=prefix();
@@ -43,10 +43,10 @@ function evaluateScientific(source) {
     }
     return left;
   }
-  if(!tokens.length)throw Error('Enter an expression');
+  if(!tokens.length)throw Error(window.siteText('Enter an expression'));
   const result=parse(0);
-  if(pos!==tokens.length)throw Error('Check the expression');
-  if(!Number.isFinite(result))throw Error('Undefined result');
+  if(pos!==tokens.length)throw Error(window.siteText('Check the expression'));
+  if(!Number.isFinite(result))throw Error(window.siteText('Undefined result'));
   return Math.abs(result)<1e-12?0:result;
 }
 
@@ -78,7 +78,7 @@ scientificInput.addEventListener('keydown',event=>{
 document.getElementById('angleUnit').addEventListener('click',()=>{
   degrees=!degrees;
   document.getElementById('angleUnit').textContent=degrees?'DEG':'RAD';
-  document.getElementById('angleUnit').setAttribute('aria-label',degrees?'Angle mode: degrees. Switch to radians':'Angle mode: radians. Switch to degrees');
+  document.getElementById('angleUnit').setAttribute('aria-label',degrees?window.siteText('Angle mode: degrees. Switch to radians'):window.siteText('Angle mode: radians. Switch to degrees'));
   updateScientific();
 });
 document.getElementById('sectionTabs').addEventListener('click',event=>{
