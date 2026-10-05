@@ -1,9 +1,9 @@
-// Values reviewed against provider publications on 2026-09-28.
+// Values reviewed against provider publications on 2026-10-05.
 // A scheduled review updates this file and republishes after checking primary sources.
 window.SALARY_RULES = Object.freeze({
   taxYear: 2026,
-  reviewedAt: '2026-09-28',
-  banksReviewedAt: '2026-09-28',
+  reviewedAt: '2026-10-05',
+  banksReviewedAt: '2026-10-05',
   germany: Object.freeze({
     brackets: Object.freeze({basic:12348, second:17799, third:69878, fourth:277825}),
     pensionCeiling:101400, healthCeiling:69750,
